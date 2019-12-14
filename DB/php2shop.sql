@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 01, 2019 at 08:26 AM
+-- Generation Time: Dec 03, 2019 at 08:39 PM
 -- Server version: 5.7.26
 -- PHP Version: 7.2.18
 
@@ -21,8 +21,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `php2shop`
 --
-CREATE DATABASE IF NOT EXISTS `php2shop` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-USE `php2shop`;
 
 -- --------------------------------------------------------
 
@@ -39,7 +37,15 @@ CREATE TABLE IF NOT EXISTS `cart` (
   `sSessionId` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `sStatusId` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `cart`
+--
+
+INSERT INTO `cart` (`ID`, `idGoods`, `nCount`, `idUser`, `sSessionId`, `sStatusId`) VALUES
+(6, 1122, 5, 12345, '10', '10'),
+(5, 1122, 5, 12345, '10', '10');
 
 -- --------------------------------------------------------
 
@@ -51,12 +57,35 @@ DROP TABLE IF EXISTS `goods`;
 CREATE TABLE IF NOT EXISTS `goods` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `sArticle` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
-  `sDescritpion` text COLLATE utf8_unicode_ci NOT NULL,
+  `sDescription` text COLLATE utf8_unicode_ci NOT NULL,
   `sImage` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'noimage.jpg',
   `sThumb` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'noimage_thumb.jpg',
   `fPrice` decimal(10,0) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Таблица товаров';
+) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Таблица товаров';
+
+--
+-- Dumping data for table `goods`
+--
+
+INSERT INTO `goods` (`ID`, `sArticle`, `sDescription`, `sImage`, `sThumb`, `fPrice`) VALUES
+(2, '0123', 'test', 'test', 'test', '1'),
+(3, '0123', 'test', 'test', 'test', '1'),
+(4, '0123', 'test', 'test', 'test', '1'),
+(7, '1111', 'test desc what the fuck?', 'test.jpg', 'test_thumb.jpg', '1'),
+(8, '0123', 'test', 'test', 'test', '1'),
+(9, '0123', 'test', 'test', 'test', '1'),
+(10, '0123', 'test', 'test', 'test', '1'),
+(11, '01231', 'test', 'test', 'test', '1'),
+(12, '01231', 'test', 'test', 'test', '1'),
+(13, '0131', 'test desc', 'test.jpg', 'test_thumb.jpg', '1'),
+(15, '1111', 'test desc', 'test.jpg', 'test_thumb.jpg', '1'),
+(16, '1111', 'test desc', 'test.jpg', 'test_thumb.jpg', '1'),
+(20, '2112', 'test desc', 'test.jpg', 'test_thumb.jpg', '1'),
+(19, '1112', 'test desc', 'test.jpg', 'test_thumb.jpg', '1'),
+(17, '1112', 'test desc', 'test.jpg', 'test_thumb.jpg', '1'),
+(18, '1112', 'test desc', 'test.jpg', 'test_thumb.jpg', '1'),
+(21, '1112', 'test desc', 'test.jpg', 'test_thumb.jpg', '1');
 
 -- --------------------------------------------------------
 
@@ -90,7 +119,15 @@ CREATE TABLE IF NOT EXISTS `user` (
   `sSessionId` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `sHash` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`ID`, `sLogin`, `sPassword`, `sName`, `sGroup`, `sSessionId`, `sHash`) VALUES
+(10, 'Login', 'Password', 'Test Name', 'Test Group', '', ''),
+(9, 'Login', 'Password', 'Test Name', 'Test Group', '', '');
 
 -- --------------------------------------------------------
 
@@ -105,7 +142,15 @@ CREATE TABLE IF NOT EXISTS `userorder` (
   `sNumber` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `sStatusId` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `userorder`
+--
+
+INSERT INTO `userorder` (`ID`, `idUser`, `sNumber`, `sStatusId`) VALUES
+(1, 111, '123', 'NEW'),
+(2, 111, '123', 'NEW');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
