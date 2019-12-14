@@ -6,12 +6,10 @@ class UserOrder extends Model
 {
     protected $tableName = 'userorder';
 
-    protected $fieldSet = [
-        'ID' => '',
-        'idUser' => '',
-        'sNumber' => '',
-        'sStatusId' => '',
-    ];
+    protected $ID;
+    protected $idUser;
+    protected $sNumber;
+    protected $sStatusId;
 
     public function getTableName(): string
     {

@@ -1,10 +1,12 @@
 <?php
 
 namespace App\modules;
+
 use App\services\DB;
 
 /**
  * Class Model
+ * Class DB
  * @var DB
  * use DB
  */
@@ -17,61 +19,64 @@ abstract class Model
 
     abstract public function getTableName(): string;
 
-    public function __construct() // Принимает только экземпляр класса DB.
+    public function __construct()
     {
         $this->db = DB::getInstance();
         $tableName = $this->getTableName();
     }
 
-    public function getFieldsToInsert() // Возвращает список полей таблицы соответствующего класса
-    {
-        return $this->fieldSet;
-    }
-
-    public function fillData($params) // Принимает массив со значениями для заполнения данных в эгземпляре класса.
-    {
-        foreach ($params as $key => $item) {
-            $this->fieldSet[$key] = $item;
+    public function fillData($data)
+    { // Заполняет свойства экземпляра класса
+        foreach ($data as $key => $value) {
+            $this->$key = $value;
         }
-        return $this->fieldSet;
     }
 
     public function getOne($id) // Возвращает одну запись из таблицы
     {
         $sql = "SELECT * FROM {$this->tableName} WHERE ID = :ID";
-        return $this->db->find($sql, [':ID' => $id], static::class);
+        return $this->db->getObject($sql, static::class, [':ID' => $id]);
     }
 
-    public function getAll() // // Возвращает все записи из таблицы
+    public function getAll() // Возвращает все записи из таблицы
     {
         $sql = "SELECT * FROM {$this->tableName}";
-        return $this->db->findAll($sql, static::class);
+        return $this->db->getObjects($sql, static::class);
     }
 
-    private function insert() // Метод для длбавления записи
+    private function insert() // Метод для добавления записи
     {
-        $fieldsArray = $this->getFieldsToInsert();
+        $tableColumns = [];
+        $fieldValues = [];
 
-        if ($fieldsArray['ID'] == '') {
-            unset($fieldsArray['ID']);
+        foreach ($this as $property => $value) {
+            if ($property == 'db' || empty($value) || $property == 'tableName') {
+                continue;
+            }
+
+            $tableColumns[] = $property;
+            $fieldValues[$property] = $value;
         }
 
-        $values = ':' . implode(', :', array_keys($fieldsArray));
-        $keys = implode(', ', array_keys($fieldsArray));
+        $values = ':' . implode(', :', array_keys($fieldValues));
+        $keys = implode(', ', array_keys($fieldValues));
 
         $sql = "INSERT INTO {$this->tableName} ($keys) VALUES ($values)";
-        return $this->db->sqlRequest($sql, $fieldsArray);
+        $this->db->sqlRequest($sql, $fieldValues);
+
+        $this->ID = $this->db->getLastId();
     }
 
     private function update($params) // Метод для обновления записи
     {
 
-        $sql = "UPDATE {$this->tableName} SET";
+        $sql = "UPDATE {$this->tableName} SET ";
 
         foreach ($params as $key => $value) {
             if ($key == 'ID') {
                 continue;
             }
+
             $sql .= " " . $key . " = :" . $key . ',';
         }
 
@@ -81,8 +86,9 @@ abstract class Model
         return $this->db->sqlRequest($sql, $params);
     }
 
-    public function save($params = []) { // Метод INSERT / UPDATE
-        if($params == []) {
+    public function save($params = [])
+    { // Метод INSERT / UPDATE
+        if ($params == []) {
             $this->insert();
         } else {
             $this->update($params);
@@ -94,5 +100,4 @@ abstract class Model
         $sql = "DELETE FROM {$this->tableName} WHERE ID = :ID";
         return $this->db->sqlRequest($sql, [':ID' => $id]);
     }
-
 }

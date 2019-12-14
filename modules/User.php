@@ -6,15 +6,13 @@ class User extends Model
 {
     protected $tableName = 'user';
 
-    protected $fieldSet = [
-        'ID' => '',
-        'sLogin' => '',
-        'sPassword' => '',
-        'sName' => '',
-        'sGroup' => '',
-        'sSessionId' => '',
-        'sHash' => '',
-    ];
+    public $ID;
+    public $sLogin;
+    public $sPassword;
+    public $sName;
+    public $sGroup;
+    public $sSessionId;
+    public $sHash;
 
     public function getTableName(): string
     {

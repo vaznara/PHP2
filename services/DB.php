@@ -68,20 +68,39 @@ class DB
     {
         $PDOStatement = $this->getConnection()->prepare($sql);
         $PDOStatement->execute($params);
+        var_dump($PDOStatement->errorInfo());
         return $PDOStatement;
+    }
+
+    public function getObject(string $sql, $class, $params = [])
+    {
+        $PDOStatement = $this->query($sql, $params);
+        $PDOStatement->setFetchMode(\PDO::FETCH_CLASS, $class);
+        return $PDOStatement->fetch();
+    }
+
+    public function getObjects(string $sql, $class, $params = [])
+    {
+        $PDOStatement = $this->query($sql, $params);
+        $PDOStatement->setFetchMode(\PDO::FETCH_CLASS, $class);
+        return $PDOStatement->fetchAll();
     }
 
     public function find($sql, $className, $params = []) // Запрос К ДБ для получения одной записи
     {
-        return $this->query($sql, $params)->fetch(PDO::FETCH_CLASS, $className);
+        return $this->query($sql, $params)->fetch();
     }
 
     public function findAll($sql, $className, $params = []) // Запрос К ДБ для получения множество записей
     {
-        return $this->query($sql, $params)->fetchAll(PDO::FETCH_CLASS, $className);
+        return $this->query($sql, $params)->fetchAll();
     }
 
-    public function sqlRequest($sql, $params) {
+    public function sqlRequest($sql, $params = []) {
         return $this->query($sql, $params);
+    }
+
+    public function getLastId() {
+        return $this->getConnection()->lastInsertId();
     }
 }
