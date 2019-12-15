@@ -41,7 +41,7 @@ class DB
     }
 
 
-    private function getConnection() // Паблик метод для получения подключения
+    private function getConnection() // Метод для получения подключения
     {
         if (empty($this->connect)) {
             $this->connect = new PDO(

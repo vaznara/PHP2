@@ -6,7 +6,7 @@ namespace App\controllers;
 
 use App\modules\User;
 
-class UserController extends MainController
+class UserController extends Controller
 {
 
     protected $defaultAction = 'all';
