@@ -7,14 +7,13 @@ class Good extends Model
 
     protected $tableName = 'goods';
 
-    protected $fieldSet = [
-        'ID' => '',
-        'sArticle' => '',
-        'sDescription' => '',
-        'sImage' => '',
-        'sThumb' => '',
-        'fPrice' => '',
-    ];
+    public $ID;
+    public $sArticle;
+    public $sName;
+    public $sDescription;
+    public $sImage;
+    public $sThumb;
+    public $fPrice;
 
     public function getTableName(): string
     {

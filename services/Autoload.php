@@ -8,8 +8,6 @@ class Autoload
 
         if (file_exists($file)) {
             include $file;
-        } else {
-            die('Ошибка! Класс <span style="color: red;">' . $className . '</span> не найден!');
         }
     }
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 03, 2019 at 08:39 PM
+-- Generation Time: Dec 14, 2019 at 10:34 PM
 -- Server version: 5.7.26
 -- PHP Version: 7.2.18
 
@@ -57,35 +57,48 @@ DROP TABLE IF EXISTS `goods`;
 CREATE TABLE IF NOT EXISTS `goods` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `sArticle` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
+  `sName` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `sDescription` text COLLATE utf8_unicode_ci NOT NULL,
   `sImage` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'noimage.jpg',
   `sThumb` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'noimage_thumb.jpg',
   `fPrice` decimal(10,0) NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Таблица товаров';
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `ID` (`ID`)
+) ENGINE=MyISAM AUTO_INCREMENT=33 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Таблица товаров';
 
 --
 -- Dumping data for table `goods`
 --
 
-INSERT INTO `goods` (`ID`, `sArticle`, `sDescription`, `sImage`, `sThumb`, `fPrice`) VALUES
-(2, '0123', 'test', 'test', 'test', '1'),
-(3, '0123', 'test', 'test', 'test', '1'),
-(4, '0123', 'test', 'test', 'test', '1'),
-(7, '1111', 'test desc what the fuck?', 'test.jpg', 'test_thumb.jpg', '1'),
-(8, '0123', 'test', 'test', 'test', '1'),
-(9, '0123', 'test', 'test', 'test', '1'),
-(10, '0123', 'test', 'test', 'test', '1'),
-(11, '01231', 'test', 'test', 'test', '1'),
-(12, '01231', 'test', 'test', 'test', '1'),
-(13, '0131', 'test desc', 'test.jpg', 'test_thumb.jpg', '1'),
-(15, '1111', 'test desc', 'test.jpg', 'test_thumb.jpg', '1'),
-(16, '1111', 'test desc', 'test.jpg', 'test_thumb.jpg', '1'),
-(20, '2112', 'test desc', 'test.jpg', 'test_thumb.jpg', '1'),
-(19, '1112', 'test desc', 'test.jpg', 'test_thumb.jpg', '1'),
-(17, '1112', 'test desc', 'test.jpg', 'test_thumb.jpg', '1'),
-(18, '1112', 'test desc', 'test.jpg', 'test_thumb.jpg', '1'),
-(21, '1112', 'test desc', 'test.jpg', 'test_thumb.jpg', '1');
+INSERT INTO `goods` (`ID`, `sArticle`, `sName`, `sDescription`, `sImage`, `sThumb`, `fPrice`) VALUES
+(2, '0123', 'test1', 'fuck', 'update.jpg', 'test', '1'),
+(3, '0123', 'test2', 'test', 'test', 'test', '1'),
+(4, '0123', 'tes3', 'test', 'test', 'test', '1'),
+(7, '11111', 'test4 akhali testi', 'test desc what the fuck?', 'test.jpg', 'test_thumb.jpg', '1'),
+(8, '0123', 'test5', 'test', 'test', 'test', '1'),
+(9, '0123', 'test6', 'test', 'test', 'test', '1'),
+(10, '0123', 'test7', 'test', 'test', 'test', '1'),
+(11, '01231', 'test8', 'test', 'test', 'test', '1'),
+(12, '01231', 'test9', 'test', 'test', 'test', '1'),
+(13, '0131', 'test10', 'test desc', 'test.jpg', 'test_thumb.jpg', '1'),
+(15, '1111', 'test11', 'test desc', 'test.jpg', 'test_thumb.jpg', '1'),
+(16, '1111', 'test12', 'test desc', 'test.jpg', 'test_thumb.jpg', '1'),
+(20, '2112', 'test13', 'test desc', 'test.jpg', 'test_thumb.jpg', '1'),
+(19, '1112', 'test14', 'test desc', 'test.jpg', 'test_thumb.jpg', '1'),
+(17, '1112', '', 'test desc', 'test.jpg', 'test_thumb.jpg', '1'),
+(18, '1112', '', 'test desc', 'test.jpg', 'test_thumb.jpg', '1'),
+(21, '1112', '', 'test desc', 'test.jpg', 'test_thumb.jpg', '1'),
+(22, '1234', '', 'Vai Vai Vai', 'new.jpg', 'new_thumb.jpg', '23'),
+(23, '1234', '', 'Vai Vai Vai', 'new.jpg', 'new_thumb.jpg', '23'),
+(24, '1234', '', 'Vai Vai Vai', 'new.jpg', 'new_thumb.jpg', '23'),
+(25, '1234', '', 'Vai Vai Vai', 'new.jpg', 'new_thumb.jpg', '23'),
+(26, '8888', 'test nazvanie', 'test opisanie', 'noimage.jpg', 'noimage_thumb.jpg', '56'),
+(27, '01235', 'test2', 'test', 'test', 'test', '1'),
+(28, '01235', 'test2', 'test', 'test', 'test', '1'),
+(29, '01235', 'test2 akhali testi', 'test', 'test', 'test', '1'),
+(30, '01235', 'test2 akhali testi', 'test', 'test', 'test', '1'),
+(31, '11111', 'test4', 'test desc what the fuck?', 'test.jpg', 'test_thumb.jpg', '1'),
+(32, '5658', 'SMS_LOYALTY_START_CONS_REG', 'this is goodasdasd', 'noimage.jpg', 'noimage_thumb.jpg', '1');
 
 -- --------------------------------------------------------
 
@@ -119,13 +132,14 @@ CREATE TABLE IF NOT EXISTS `user` (
   `sSessionId` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `sHash` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`ID`, `sLogin`, `sPassword`, `sName`, `sGroup`, `sSessionId`, `sHash`) VALUES
+(12, 'newTest 555', '123456', 'testUser', 'GroupAdmin', 'test', 'test'),
 (10, 'Login', 'Password', 'Test Name', 'Test Group', '', ''),
 (9, 'Login', 'Password', 'Test Name', 'Test Group', '', '');
 

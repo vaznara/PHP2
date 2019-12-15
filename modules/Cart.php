@@ -7,14 +7,12 @@ class Cart extends Model
 
     protected $tableName = 'cart';
 
-    protected $fieldSet = [
-        'ID' => '',
-        'idGoods' => '',
-        'nCount' => '',
-        'idUser' => '',
-        'sSessionId' => '',
-        'sStatusId' => '',
-    ];
+    public $ID;
+    public $idGoods;
+    public $nCount;
+    public $idUser;
+    public $sSessionId;
+    public $sStatusId;
 
     public function getTableName(): string
     {
