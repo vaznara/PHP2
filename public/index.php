@@ -1,20 +1,21 @@
 <?php
 
-namespace App\services;
-namespace App\controllers;
+namespace App\modules;
+use App\services\renderers\TwigRender;
+use App\services\Request;
 
 session_start();
 
-include dirname(__DIR__) . '\services\Autoload.php';
-spl_autoload_register([new \Autoload(), 'loadClass']);
+require dirname(__DIR__) . '/vendor/autoload.php';
 
-$controllerName = (!empty($_GET['c'])) ? $_GET['c'] : 'user';
-$actionName = (!empty($_GET['a'])) ? $_GET['a'] : '';
+$getRequest = new Request();
 
+$controllerName = empty($getRequest->getController()) ? 'main' : $getRequest->getController();
+$actionName = $getRequest->getAction();
 
 $controllerClass = 'App\\controllers\\' . ucfirst($controllerName) . 'Controller';
 
 if (class_exists($controllerClass)) {
-    $controller = new $controllerClass;
+    $controller = new $controllerClass(new TwigRender());
     echo $controller->run($actionName);
 }

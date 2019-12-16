@@ -1,0 +1,23 @@
+{% extends 'layouts/main.twig' %}
+
+{% block title %} Товар {{ catalog.sName }} {% endblock %}
+
+{% block content %}
+    <div class="goods__catalog good__page">
+        <div class="news__content">
+            <h2 class="news__title">{{ catalog.sName }}</h2>
+            <div class="news__content-item goods--item">
+                <img src="/img/goods/{{ catalog.sImage }}" alt="{{ catalog.sName }}"
+                     class="news__img goods--img">
+                <div class="goods__wrapper">
+                    <p class="goods_desc">{{ catalog.sDescription }}</p>
+                    <div class="buy-form">
+                        <input type="number" name="quantity" min="1" value="1" data-id="{{ good.ID }}">
+                        <button class="btn buy-btn" data-id="{{ good.ID }}">Купить</button>
+                    </div>
+                </div>
+            </div>
+            <a href="/catalog/" class="back__link">Назад &gt;&gt;</a>
+        </div>
+    </div>
+{% endblock %}

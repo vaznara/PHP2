@@ -25,8 +25,8 @@ abstract class Model
         $tableName = $this->getTableName();
     }
 
-    public function fillData($data)
-    { // Заполняет свойства экземпляра класса
+    public function fillData($data) // Заполняет свойства экземпляра класса
+    {
         foreach ($data as $key => $value) {
             $this->$key = $value;
         }
@@ -50,7 +50,7 @@ abstract class Model
         $fieldValues = [];
 
         foreach ($this as $property => $value) {
-            if ($property == 'db' || empty($value) || $property == 'tableName') {
+            if ($property == 'db' || empty($value) || $property == 'tableName' || $property == 'tableViewName') {
                 continue;
             }
 
@@ -70,6 +70,8 @@ abstract class Model
     private function update($params) // Метод для обновления записи
     {
 
+        var_dump($params);
+
         $sql = "UPDATE {$this->tableName} SET ";
 
         foreach ($params as $key => $value) {
@@ -86,8 +88,8 @@ abstract class Model
         return $this->db->sqlRequest($sql, $params);
     }
 
-    public function save($params = [])
-    { // Метод INSERT / UPDATE
+    public function save($params = []) // Метод INSERT / UPDATE
+    {
         if ($params == []) {
             $this->insert();
         } else {

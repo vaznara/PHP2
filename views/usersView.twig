@@ -1,0 +1,9 @@
+{% extends 'layouts/main.twig' %}
+
+{% block title %} Пользователь {{ users.sName }} {% endblock %}
+
+{% block content %}
+    <div class="users__block">
+            <h1>Пользователь: <span style="font-weight: normal">{{ users.sLogin }}</span></h1>
+    </div>
+{% endblock %}

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>{% block title %} Untitled {% endblock %}</title>
+</head>
+<body>
+<nav class="main-menu">
+    <div class="container">
+        <ul class="main-menu__list">
+            {% block nav %}
+                <li class="main-menu__item"><a href="/" class="main-menu__link">Главная</a></li>
+                <li class="main-menu__item"><a href="/catalog/" class="main-menu__link">Каталог</a></li>
+                <li class="main-menu__item"><a href="/user/" class="main-menu__link">Пользователи</a></li>
+                <li class="main-menu__item"><a href="/cart/" class="main-menu__link">Корзина
+                        <!--(<span class="red" id="cart-count"></span>)--></a></li>
+            {% endblock %}
+        </ul>
+    </div>
+</nav>
+<div class="container">
+    {% block content %}
+    {% endblock %}
+</div>
+</body>
+<script src="/js/main.js"></script>
+</html>
