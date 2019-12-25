@@ -2,14 +2,6 @@
 
 {% block title %} Пользователи {% endblock %}
 
-{#{% block content %}#}
-{#    <div class="users__block">#}
-{#        {% for user in users %}#}
-{#            <h1><a href="/user/view/?id={{ user.ID }}">{{ user.sLogin }}</a></h1>#}
-{#        {% endfor %}#}
-{#    </div>#}
-{#{% endblock %}#}
-
 {% block content %}
     <div class="users__block">
         <h1>Список пользователей</h1>
@@ -34,4 +26,9 @@
             </tbody>
         </table>
     </div>
+{% endblock %}
+{% block content %}
+    {% for user in users %}
+        <h1><a href="?c=user&a=one&id={{ user.ID }}">{{ user.sLogin }}</a></h1>
+    {% endfor %}
 {% endblock %}

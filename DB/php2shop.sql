@@ -81,14 +81,16 @@ INSERT INTO `cartitem` (`ID`, `idGoods`, `nCount`, `idUser`, `sSessionId`, `sSta
 DROP TABLE IF EXISTS `goods`;
 CREATE TABLE IF NOT EXISTS `goods` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `sArticle` varchar(100) NOT NULL,
-  `sName` varchar(100) NOT NULL,
-  `sDescription` text NOT NULL,
-  `sImage` varchar(100) NOT NULL,
-  `sThumb` varchar(100) NOT NULL,
-  `fPrice` float NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='Таблица товаров';
+
+  `sArticle` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
+  `sName` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `sDescription` text COLLATE utf8_unicode_ci NOT NULL,
+  `sImage` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'noimage.jpg',
+  `sThumb` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'noimage_thumb.jpg',
+  `fPrice` decimal(10,0) NOT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `ID` (`ID`)
+) ENGINE=MyISAM AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Таблица товаров';
 
 --
 -- Dumping data for table `goods`

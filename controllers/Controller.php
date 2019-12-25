@@ -4,6 +4,7 @@
 namespace App\controllers;
 
 
+
 use App\services\Request;
 
 abstract class Controller
@@ -12,6 +13,7 @@ abstract class Controller
     protected $defaultAction;
     protected $templateName;
     protected $className;
+
     protected $requestParams;
     protected $getData;
     protected $postData;
@@ -20,6 +22,7 @@ abstract class Controller
 
     abstract function getTemplateName();
     abstract function defaultAction();
+
     abstract function getClassName();
 
     protected $twig;
@@ -27,6 +30,7 @@ abstract class Controller
     public function __construct($renderer)
     {
         $this->twig = $renderer;
+
 
 //        $defaultAction = $this->getDefaultAction();
         $templateName = $this->getTemplateName();
@@ -48,6 +52,19 @@ abstract class Controller
             $actionName = $this->defaultAction();
         } else {
 
+        $defaultAction = $this->getDefaultAction();
+        $templateName = $this->getTemplateName();
+        $className = $this->getClassName();
+    }
+
+    public function run($actionName)
+    {
+
+        if (empty($actionName)) {
+            $actionName = $this->defaultAction;
+        }
+
+
         $method = $actionName . 'Action';
 
         if (method_exists($this, $method)) {
@@ -55,6 +72,7 @@ abstract class Controller
         }
 
         return '404 - Страница не найдена';
+
         }
     }
 
@@ -75,11 +93,26 @@ abstract class Controller
 
         $getOne = (new $this->className())->getOne($getParam);
         $this->render($this->templateName, [$this->templateName => $getOne]);
+
+    }
+
+    public function allAction()
+    {
+        $getAll = (new $this->className())->getAll();
+        return $this->render($this->templateName . 's', [$this->templateName . 's' => $getAll]);
+    }
+
+    public function oneAction()
+    {
+        $getOne = (new $this->className())->getOne($_GET['id']);
+        return $this->render($this->templateName, [$this->templateName => $getOne]);
+
     }
 
     public function addAction()
     {
         $addObject = new $this->className();
+
         $postDataFill = [];
 
         foreach ($this->postData as $key => $value) {
@@ -87,6 +120,15 @@ abstract class Controller
         }
 
         $addObject->fillData($postDataFill);
+
+        $postData = $_POST;
+
+        foreach ($_POST as $key => $value) {
+            $postData[$key] = $value;
+        }
+
+        $addObject->fillData($postData);
+
         $addObject->save();
     }
 
