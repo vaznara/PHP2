@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 14, 2019 at 10:34 PM
+-- Generation Time: Dec 15, 2019 at 03:37 PM
 -- Server version: 5.7.26
 -- PHP Version: 7.2.18
 
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `goods` (
   `fPrice` decimal(10,0) NOT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE KEY `ID` (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=33 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Таблица товаров';
+) ENGINE=MyISAM AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Таблица товаров';
 
 --
 -- Dumping data for table `goods`
@@ -72,11 +72,11 @@ CREATE TABLE IF NOT EXISTS `goods` (
 
 INSERT INTO `goods` (`ID`, `sArticle`, `sName`, `sDescription`, `sImage`, `sThumb`, `fPrice`) VALUES
 (2, '0123', 'test1', 'fuck', 'update.jpg', 'test', '1'),
-(3, '0123', 'test2', 'test', 'test', 'test', '1'),
-(4, '0123', 'tes3', 'test', 'test', 'test', '1'),
-(7, '11111', 'test4 akhali testi', 'test desc what the fuck?', 'test.jpg', 'test_thumb.jpg', '1'),
+(3, '0123', 'test2', 'test11111', 'test', 'test', '112'),
+(4, '0123', 'tes3', 'test1', 'test', 'test', '1'),
+(7, '11111', 'test4 akhali testieda555', 'test desc what the fuck?111', 'test.jpg', 'test_thumb.jpg', '1'),
 (8, '0123', 'test5', 'test', 'test', 'test', '1'),
-(9, '0123', 'test6', 'test', 'test', 'test', '1'),
+(9, '0123', 'test6', 'test', 'test', 'test', '111'),
 (10, '0123', 'test7', 'test', 'test', 'test', '1'),
 (11, '01231', 'test8', 'test', 'test', 'test', '1'),
 (12, '01231', 'test9', 'test', 'test', 'test', '1'),
@@ -98,7 +98,9 @@ INSERT INTO `goods` (`ID`, `sArticle`, `sName`, `sDescription`, `sImage`, `sThum
 (29, '01235', 'test2 akhali testi', 'test', 'test', 'test', '1'),
 (30, '01235', 'test2 akhali testi', 'test', 'test', 'test', '1'),
 (31, '11111', 'test4', 'test desc what the fuck?', 'test.jpg', 'test_thumb.jpg', '1'),
-(32, '5658', 'SMS_LOYALTY_START_CONS_REG', 'this is goodasdasd', 'noimage.jpg', 'noimage_thumb.jpg', '1');
+(32, '5658', 'SMS_LOYALTY_START_CONS_REG', 'this is goodasdasd', 'noimage.jpg', 'noimage_thumb.jpg', '1'),
+(33, '8888', 'ait AIT TI', 'VATATATATAA', 'noimage.jpg', 'noimage_thumb.jpg', '5'),
+(34, '8884', '5555111', '1111', 'noimage.jpg', 'noimage_thumb.jpg', '11');
 
 -- --------------------------------------------------------
 

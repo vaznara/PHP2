@@ -25,8 +25,8 @@ abstract class Model
         $tableName = $this->getTableName();
     }
 
-    public function fillData($data)
-    { // Заполняет свойства экземпляра класса
+    public function fillData($data) // Заполняет свойства экземпляра класса
+    {
         foreach ($data as $key => $value) {
             $this->$key = $value;
         }
@@ -86,8 +86,8 @@ abstract class Model
         return $this->db->sqlRequest($sql, $params);
     }
 
-    public function save($params = [])
-    { // Метод INSERT / UPDATE
+    public function save($params = []) // Метод INSERT / UPDATE
+    {
         if ($params == []) {
             $this->insert();
         } else {
