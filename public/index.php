@@ -2,13 +2,16 @@
 
 namespace App\modules;
 use App\services\renderers\TwigRender;
+use App\services\Request;
 
 session_start();
 
 require dirname(__DIR__) . '/vendor/autoload.php';
 
-$controllerName = (!empty($_GET['c'])) ? $_GET['c'] : 'user';
-$actionName = (!empty($_GET['a'])) ? $_GET['a'] : '';
+$getRequest = new Request();
+
+$controllerName = empty($getRequest->getController()) ? 'main' : $getRequest->getController();
+$actionName = $getRequest->getAction();
 
 $controllerClass = 'App\\controllers\\' . ucfirst($controllerName) . 'Controller';
 

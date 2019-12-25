@@ -6,17 +6,21 @@ namespace App\controllers;
 
 use App\modules\User;
 
-class UserController extends Controller
+class CatalogController extends Controller
 {
 
-    protected $defaultAction = 'all';
-    protected $templateName = 'users';
-    protected $className = 'App\\modules\\User';
+//    protected $defaultAction = 'all';
+    protected $templateName = 'catalog';
+    protected $className = 'App\\modules\\Catalog';
 
     public function defaultAction()
     {
         $getAll = (new $this->className())->getAll();
         $this->render($this->templateName, [$this->templateName => $getAll]);
+    }
+
+    public function getTemplateName() {
+        return $this->templateName;
     }
 
     public function viewAction()
@@ -29,10 +33,6 @@ class UserController extends Controller
 
         $getOne = (new $this->className())->getOne($getParam);
         $this->render($this->templateName . 'View', [$this->templateName => $getOne]);
-    }
-
-    public function getTemplateName() {
-        return $this->templateName;
     }
 
     public function getClassName()

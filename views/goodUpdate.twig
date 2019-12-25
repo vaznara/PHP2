@@ -3,7 +3,7 @@
 {% block title %} Обновить товар {{ goodUpdate.sName }} {% endblock %}
 
 {% block content %}
-    <form action="?c=good&a=save&id={{ goodUpdate.ID }}" method="post">
+    <form action="/good/save/?id={{ goodUpdate.ID }}" method="post">
         <input type="text" name="sArticle" value="{{ goodUpdate.sArticle }}"><br/>
         <input type="text" name="sName" value="{{ goodUpdate.sName }}"><br/>
         <input type="text" name="sDescription" value="{{ goodUpdate.sDescription }}"><br/>

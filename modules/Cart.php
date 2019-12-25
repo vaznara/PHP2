@@ -2,10 +2,13 @@
 
 namespace App\modules;
 
+use App\services\Request;
+
 class Cart extends Model
 {
 
-    protected $tableName = 'cart';
+    protected $tableName = 'cartitem';
+    protected $tableViewName = 'cart';
 
     public $ID;
     public $idGoods;
@@ -17,5 +20,16 @@ class Cart extends Model
     public function getTableName(): string
     {
         return $this->tableName;
+    }
+
+    public function getSessionId() {
+        $params = new Request();
+        return $params->getSessionId();
+    }
+
+    public function getAll() // Возвращает все записи из таблицы
+    {
+        $sql = "SELECT * FROM {$this->tableViewName} WHERE sSessionId = '{$this->getSessionId()}'";
+        return $this->db->getObjects($sql, static::class);
     }
 }

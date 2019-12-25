@@ -50,7 +50,7 @@ abstract class Model
         $fieldValues = [];
 
         foreach ($this as $property => $value) {
-            if ($property == 'db' || empty($value) || $property == 'tableName') {
+            if ($property == 'db' || empty($value) || $property == 'tableName' || $property == 'tableViewName') {
                 continue;
             }
 
@@ -69,6 +69,8 @@ abstract class Model
 
     private function update($params) // Метод для обновления записи
     {
+
+        var_dump($params);
 
         $sql = "UPDATE {$this->tableName} SET ";
 

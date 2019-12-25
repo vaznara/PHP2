@@ -34,7 +34,7 @@ class DB
 
     public static function getInstance()
     {
-        if(empty(static::$items)) {
+        if (empty(static::$items)) {
             static::$items = new static();
         }
         return static::$items;
@@ -68,7 +68,7 @@ class DB
     {
         $PDOStatement = $this->getConnection()->prepare($sql);
         $PDOStatement->execute($params);
-        var_dump($PDOStatement->errorInfo());
+//        var_dump($PDOStatement->errorInfo());
         return $PDOStatement;
     }
 
@@ -96,11 +96,13 @@ class DB
         return $this->query($sql, $params)->fetchAll();
     }
 
-    public function sqlRequest($sql, $params = []) {
+    public function sqlRequest($sql, $params = [])
+    {
         return $this->query($sql, $params);
     }
 
-    public function getLastId() {
+    public function getLastId()
+    {
         return $this->getConnection()->lastInsertId();
     }
 }

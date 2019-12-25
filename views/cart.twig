@@ -1,0 +1,29 @@
+{% extends 'layouts/main.twig' %}
+
+{% block title %} Корзина {% endblock %}
+
+{% block content %}
+<div class="container cart--container">
+    <h2 class="cart__title">Корзина</h2>
+    <div class="goods__cart">
+        <div class="goods__cart-item cart--heading">
+            <p class="grid_heading grid-span">Наименование</p>
+            <p class="grid_heading">Цена</p>
+            <p class="grid_heading">Количество</p>
+            <p class="grid_heading">Действие</p>
+        </div>
+        {% for good in cart %}
+            <div class="goods__cart-item">
+                <a href="/catalog/view/?id={{ good.idGoods }}" class="goods__cart-link">
+                    <img src="/img/goods/{{ good.sThumb }}" alt="{{ good.sName }}"
+                         class="goods__cart-img"></a>
+                <a href="/catalog/view/?id={{ good.idGoods }}" class="goods__cart-link">
+                    <h3 class="goods__name">{{ good.sName }}</h3></a>
+                <p class="goods__price">{{ good.fPrice }} руб.</p>
+                <p class="goods__price">{{ good.nCount }}</p>
+                <button class="goods__cart-delete btn" data-id="{{ good.idGoods }}">Удалить</button>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
