@@ -1,0 +1,44 @@
+{% extends 'layouts/main.twig' %}
+
+{% block title %} Заказы {% endblock %}
+
+{% block content %}
+
+    <div class="users__block">
+        <h1>Список заказов</h1>
+
+        <table cellpadding="0" cellspacing="0" style="box-sizing: border-box">
+            <tbody>
+            <tr>
+                <th style="text-align: center;"><strong>Номер Заказа</strong><br/></th>
+                <th style="text-align: center;"><strong>ID пользователя</strong></th>
+                <th style="text-align: center;"><strong>Статус</strong></th>
+            </tr>
+            {% for key, item in orders %}
+                <tr>
+                    <td><a href="/order/view/?id={{ item.ID }}">Заказ №{{ item.ID }}</a></td>
+                    <td><a href="/order/view/?id={{ item.ID }}">{{ item.idUser }}</a></td>
+                    {% if userGroup == 'userGroup' %}
+                        <td>{{ item.sStatusId }}</td>{% endif %}
+                    {% if userGroup == 'adminGroup' %}
+                        <td>
+                            <form action="/order/updatestatus/?id={{ item.ID }}" method="POST">
+                                <select name="status" class="status__select" required>
+                                    {% for status in statuses %}
+                                    {% if item.sStatusId ==  status.sStatusID %}
+                                    <option selected value="{{ item.sStatusId }}">{{ status.sStatusValue }}</option>
+                                    {% else %}
+                                    <option value="{{ status.sStatusID }}">{{ status.sStatusValue }}</option>
+                                    {% endif %}
+                                    {% endfor %}
+                                </select>
+                                <input type="submit" value="Сохранить" class="btn">
+                            </form>
+                        </td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

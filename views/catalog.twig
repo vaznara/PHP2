@@ -2,19 +2,6 @@
 
 {% block title %} Товары {% endblock %}
 
-{#{% block content %}#}
-{#    <form action="/good/add" method="post">#}
-{#        <label for="article">Артикул товара</label><input type="text" name="sArticle" id="article"><br/>#}
-{#        <label for="desk">Название товара</label><input type="text" name="sName" id="name"><br/>#}
-{#        <label for="desk">Описание товара</label><input type="text" name="sDescription" id="desk"><br/>#}
-{#        <label for="desk">Цена товара</label><input type="text" name="fPrice" id="price"><br/>#}
-{#        <input type="submit" value="Добавить товар">#}
-{#    </form>#}
-{#    {% for good in goods %}#}
-{#        <h1><a href="/good/one/?id={{ good.ID }}">{{ good.sName }}</a></h1>#}
-{#    {% endfor %}#}
-{#{% endblock %}#}
-
 {% block content %}
 <div class="goods__catalog">
     {% for good in catalog %}
@@ -22,8 +9,9 @@
             <a href="/catalog/view/?id={{ good.ID }}" class="goods__catalog-link"><img
                         src="/img/goods/{{ good.sThumb }}" alt="{{ good.sName }}" class="goods__img">
                 <h3 class="goods__name">{{ good.sName }}</h3></a>
-            <p class="goods__price">{{ good.fPrice }} руб.</p>
-            <div class="buy-form"><input type="number" name="nCount" min="1" value="1" data-id="{{ good.ID }}">
+            <p class="goods__price align--left" data-id="{{ good.ID }}">{{ good.fPrice }} руб.</p>
+            <div class="buy-form">
+                <input type="number" name="nCount" min="1" value="1" data-id="{{ good.ID }}">
                 <button class="btn buy-btn" data-id="{{ good.ID }}">Купить</button>
             </div>
         </div>

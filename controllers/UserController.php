@@ -2,20 +2,17 @@
 
 
 namespace App\controllers;
-
-
+use App\main\App;
 use App\modules\User;
 
 class UserController extends Controller
 {
 
-    protected $defaultAction = 'all';
     protected $templateName = 'users';
-    protected $className = 'App\\modules\\User';
 
     public function defaultAction()
     {
-        $getAll = (new $this->className())->getAll();
+        $getAll = App::call()->userRepository->getAll();
         $this->render($this->templateName, [$this->templateName => $getAll]);
     }
 
@@ -23,20 +20,10 @@ class UserController extends Controller
     {
         if(key_exists('id', $this->getData)) {
             $getParam = (int)$this->getData['id'];
+            $getOne = App::call()->userRepository->getOne($getParam);
+            $this->render($this->templateName . 'View', [$this->templateName => $getOne]);
         } else {
-            return '404 - Страница не найдена';
+            $this->render('404', []);
         }
-
-        $getOne = (new $this->className())->getOne($getParam);
-        $this->render($this->templateName . 'View', [$this->templateName => $getOne]);
-    }
-
-    public function getTemplateName() {
-        return $this->templateName;
-    }
-
-    public function getClassName()
-    {
-        return $this->className;
     }
 }

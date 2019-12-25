@@ -5,7 +5,9 @@
 {% block content %}
     <div class="main__auth">
         <div class="container">
-            <p style="text-align: center">Добро пожаловать в наш магазин</p>
+            {% if userGroup %}<p style="text-align: center">Добро пожаловать в наш магазин {{ userName }}</p>
+                {% else %} <p style="text-align: center">Добро пожаловать в наш магазин</p>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

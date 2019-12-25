@@ -1,0 +1,22 @@
+{% extends 'layouts/main.twig' %}
+
+{% block title %} Вход / Регистрация {% endblock %}
+
+{% block content %}
+    {% if userGroup %}
+        <div class="main__auth">
+            <p>Вы уже авторизованы!</p>
+        </div>
+    {% else %}
+        <div class="main__auth">
+            <h1 style="text-align: center;">Войти в систему</h1>
+            <form class="login__form" method="post" action="/auth/login/?do">
+                <label for="sLogin">Логин</label><input name="sLogin" type="text">
+                <label for="sPassword">Пароль</label><input name="sPassword" type="password">
+                {#        <label for="user-password">Запомнить меня</label><input type="checkbox" name="remember-me">#}
+                <button type="submit" class="btn">Войти</button>
+            </form>
+            <p>Нет учетной записи? <a href="/auth/register">Зарегистрируйтесь</a></p>
+        </div>
+    {% endif %}
+{% endblock %}

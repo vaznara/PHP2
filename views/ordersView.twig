@@ -1,0 +1,40 @@
+{% extends 'layouts/main.twig' %}
+
+{% block title %}Корзина{% endblock %}
+
+{% block content %}
+    <div class="container cart--container">
+        <h2 class="cart__title">Заказ №{{ orderid }}</h2>
+        <div class="goods__cart">
+            <div class="goods__cart-item cart--heading">
+                <p class="grid_heading grid-span">Наименование</p>
+                <p class="grid_heading">Цена</p>
+                <p class="grid_heading">Количество</p>
+                <p class="grid_heading">Сумма</p>
+            </div>
+            {% set sum = 0 %}
+            {% set countSum = 0 %}
+            {% for item in orders %}
+                {% set sum = sum + item.fSum %}
+                {% set countSum = countSum + item.nCount %}
+                <div class="goods__cart-item">
+                    <a href="/catalog/view/?id={{ item.idGoods }}" class="goods__cart-link">
+                        <img src="/img/goods/{{ item.sThumb }}" alt="{{ item.sName }}"
+                             class="goods__cart-img"></a>
+                    <a href="/catalog/view/?id={{ item.idGoods }}" class="goods__cart-link">
+                        <h3 class="goods__name">{{ item.sName }}</h3></a>
+                    <p class="goods__price">{{ item.fPrice }} руб.</p>
+                    <p class="goods__price">{{ item.nCount }}</p>
+                    <p class="goods__price">{{ item.fSum }} руб.</p>
+                </div>
+            {% endfor %}
+            <div class="goods__cart-item cart--heading">
+                <p class="grid_heading grid-span" style="text-align: right">Сумма</p>
+                <p class="grid_heading"></p>
+                <p class="grid_heading">{{countSum}}</p>
+                <p class="grid_heading">{{sum}} руб.</p>
+            </div>
+        </div>
+        <a href="/order">Перейти к списку заказов >></a>
+    </div>
+{% endblock %}

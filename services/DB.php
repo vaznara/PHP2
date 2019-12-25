@@ -2,44 +2,20 @@
 
 namespace App\services;
 
+use App\traits\TSingleton;
 use PDO;
 
 class DB
 {
 
-    private $config = [ // Конфигурация подключения
-        'driver' => 'mysql',
-        'host' => 'localhost',
-        'db' => 'php2shop',
-        'charset' => 'UTF8',
-        'username' => 'php2shop',
-        'password' => '123456',
-    ];
+    private $config = [];
 
     private $connect; // Переменная для хранения подключения
 
-    protected function __construct()
+    public function __construct($config)
     {
+        $this->config = $config;
     }
-
-    protected function __clone()
-    {
-    }
-
-    protected function __wakeup()
-    {
-    }
-
-    private static $items;
-
-    public static function getInstance()
-    {
-        if (empty(static::$items)) {
-            static::$items = new static();
-        }
-        return static::$items;
-    }
-
 
     private function getConnection() // Метод для получения подключения
     {
@@ -68,7 +44,7 @@ class DB
     {
         $PDOStatement = $this->getConnection()->prepare($sql);
         $PDOStatement->execute($params);
-//        var_dump($PDOStatement->errorInfo());
+//        var_dump($PDOStatement->errorInfo(), $params, $sql);
         return $PDOStatement;
     }
 
@@ -91,7 +67,7 @@ class DB
         return $this->query($sql, $params)->fetch();
     }
 
-    public function findAll($sql, $className, $params = []) // Запрос К ДБ для получения множество записей
+    public function findAll($sql, $params = []) // Запрос К ДБ для получения множество записей
     {
         return $this->query($sql, $params)->fetchAll();
     }

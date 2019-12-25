@@ -1,29 +1,43 @@
 {% extends 'layouts/main.twig' %}
 
-{% block title %} Корзина {% endblock %}
+{% block title %}Корзина{% endblock %}
 
 {% block content %}
-<div class="container cart--container">
-    <h2 class="cart__title">Корзина</h2>
-    <div class="goods__cart">
-        <div class="goods__cart-item cart--heading">
-            <p class="grid_heading grid-span">Наименование</p>
-            <p class="grid_heading">Цена</p>
-            <p class="grid_heading">Количество</p>
-            <p class="grid_heading">Действие</p>
-        </div>
-        {% for good in cart %}
-            <div class="goods__cart-item">
-                <a href="/catalog/view/?id={{ good.idGoods }}" class="goods__cart-link">
-                    <img src="/img/goods/{{ good.sThumb }}" alt="{{ good.sName }}"
-                         class="goods__cart-img"></a>
-                <a href="/catalog/view/?id={{ good.idGoods }}" class="goods__cart-link">
-                    <h3 class="goods__name">{{ good.sName }}</h3></a>
-                <p class="goods__price">{{ good.fPrice }} руб.</p>
-                <p class="goods__price">{{ good.nCount }}</p>
-                <button class="goods__cart-delete btn" data-id="{{ good.idGoods }}">Удалить</button>
+    <div class="container cart--container">
+        <h2 class="cart__title">Корзина</h2>
+        <div class="goods__cart">
+            <div class="goods__cart-item cart--heading">
+                <p class="grid_heading grid-span">Наименование</p>
+                <p class="grid_heading">Цена</p>
+                <p class="grid_heading">Количество</p>
+                <p class="grid_heading">Действие</p>
             </div>
-        {% endfor %}
+            {% for good in cart %}
+                <div class="goods__cart-item">
+                    <a href="/catalog/view/?id={{ good.idGoods }}" class="goods__cart-link">
+                        <img src="/img/goods/{{ good.sThumb }}" alt="{{ good.sName }}"
+                             class="goods__cart-img"></a>
+                    <a href="/catalog/view/?id={{ good.idGoods }}" class="goods__cart-link">
+                        <h3 class="goods__name">{{ good.sName }}</h3></a>
+                    <p class="goods__price">{{ good.fPrice }} руб.</p>
+                    <p class="goods__price">{{ good.nCount }}</p>
+                    <button class="goods__cart-delete btn" data-id="{{ good.idGoods }}">Удалить</button>
+                </div>
+            {% endfor %}
+            {% if cart %}
+                <div class="goods__cart-item">
+                    <p class="grid_heading grid-span" style="text-align: right"><strong>Сумма заказа:</strong></p>
+                    <p class="grid_heading" id="cart-sum"><strong>{{ cartSum.priceSum }} руб.</strong></p>
+                    <p class="grid_heading" id="cart-count"><strong>{{ cartSum.countSum }}</strong></p>
+                    {% if userGroup == 'adminGroup' or userGroup == 'userGroup' %}<p class="grid_heading"><button class="order-btn btn">Оформить заказ</button></p>{% endif %}
+                </div>
+                {% if not userGroup %}<div class="order__form-wrapper">
+                    <p style="text-align: center">Для оформления заказа <a href="/auth/login/">авторизуйтесь</a> или <a href="/auth/register/">зарегистрируйтесь</a></p>
+                {% endif %}
+                </div>
+            {% else %}
+                <div style="background: white; padding: 20px 0;"><p style="text-align: center;"><strong>Корзина пуста</strong></p></div>
+            {% endif %}
+        </div>
     </div>
-</div>
 {% endblock %}

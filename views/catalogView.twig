@@ -10,10 +10,11 @@
                 <img src="/img/goods/{{ catalog.sImage }}" alt="{{ catalog.sName }}"
                      class="news__img goods--img">
                 <div class="goods__wrapper">
-                    <p class="goods_desc">{{ catalog.sDescription }}</p>
+                    <p class="goods_desc">{{ catalog.sDescription | raw }}</p>
                     <div class="buy-form">
-                        <input type="number" name="quantity" min="1" value="1" data-id="{{ good.ID }}">
-                        <button class="btn buy-btn" data-id="{{ good.ID }}">Купить</button>
+                        <input type="number" name="nCount" min="1" value="1" data-id="{{ catalog.ID }}">
+                        <p class="goods__price" data-id="{{ catalog.ID }}">{{ catalog.fPrice }} руб.</p>
+                        <button class="btn buy-btn" data-id="{{ catalog.ID }}">Купить</button>
                     </div>
                 </div>
             </div>
