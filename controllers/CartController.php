@@ -3,41 +3,78 @@
 
 namespace App\controllers;
 
+use App\entities\Order;
+use App\entities\OrderItem;
+use App\main\App;
+use App\entities\Cart;
+
 class CartController extends Controller
 {
 
-//    protected $defaultAction = 'all';
     protected $templateName = 'cart';
-    protected $className = 'App\\modules\\Cart';
 
     public function defaultAction()
     {
-        $getAll = (new $this->className())->getAll($this->requestParams->getSessionId());
-        $this->render($this->templateName, [$this->templateName => $getAll]);
-    }
-
-    public function getTemplateName()
-    {
+        $this->render($this->templateName, [$this->templateName => App::call()->cartRepository->getUserCart()]);
     }
 
     public function addAction()
     {
-
-        $addObject = new $this->className();
-        $postDataFill = [];
-
-        foreach ($this->jsonPostData as $key => $value) {
-            $postDataFill[$key] = $value;
+        foreach (App::call()->cartRepository->getUserCart() as $key => $value) {
+            if ($value->idGoods == App::call()->request->getJsonPostData()['idGoods']) {
+                $value->nCount += App::call()->request->getJsonPostData()['nCount'];
+                $value->fPrice = App::call()->request->getJsonPostData()['fPrice'];
+                App::call()->cartRepository->save($value);
+                return json_encode(App::call()->cartRepository->getCartSum());
+            }
         }
 
-        $postDataFill['sSessionId'] = $this->requestParams->getSessionId();
+        $userCart = new Cart();
 
-        $addObject->fillData($postDataFill);
-        $addObject->save();
+        foreach ($this->jsonPostData as $key => $value) {
+            $userCart->$key = $value;
+            $userCart->sSessionId = App::call()->request->getSessionId();
+            if (App::call()->auth->getUserName()) {
+                $userCart->idUser = App::call()->auth->getUserName();
+            }
+        }
+        App::call()->cartRepository->save($userCart);
+        return json_encode(App::call()->cartRepository->getCartSum());
     }
 
-    public function getClassName()
+    public function deleteAction()
     {
-        return $this->className;
+        foreach (App::call()->cartRepository->getUserCart() as $value) {
+            if ($value->idGoods == $this->getData['id']) {
+                App::call()->cartRepository->delete(App::call()->cartRepository->getOne($value->ID));
+            }
+        }
+        return json_encode(App::call()->cartRepository->getCartSum());
+    }
+
+    public function orderAction()
+    {
+        $userOrder = new Order();
+        $userOrder->sSessionId = App::call()->request->getSessionId();
+        $userOrder->idUser = App::call()->auth->getUserName();
+        $orderId = App::call()->orderRepository->save($userOrder);
+
+        $userOrderItem = new OrderItem();
+        $userCart = App::call()->cartRepository->getUserCart();
+
+        foreach ($userCart as $value) {
+            foreach ($value as $key => $item) {
+                if ($key == 'idGoods' || $key == 'nCount' || $key == 'fPrice') {
+                    $userOrderItem->ID = '';
+                    $userOrderItem->$key = $item;
+                }
+            }
+
+            $userOrderItem->idOrder = $orderId;
+            App::call()->orderItemRepository->save($userOrderItem);
+        }
+
+        App::call()->cartRepository->clearCart();
+        return json_encode(['id' => $orderId]);
     }
 }

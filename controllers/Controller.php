@@ -3,170 +3,59 @@
 
 namespace App\controllers;
 
-
-
+use App\main\App;
+use App\services\Auth;
 use App\services\Request;
 
 abstract class Controller
 {
 
-    protected $defaultAction;
     protected $templateName;
     protected $className;
-
     protected $requestParams;
     protected $getData;
     protected $postData;
     protected $jsonPostData;
-    protected $sessionId;
+    protected $auth;
 
-    abstract function getTemplateName();
     abstract function defaultAction();
-
-    abstract function getClassName();
 
     protected $twig;
 
-    public function __construct($renderer)
+    public function __construct()
     {
-        $this->twig = $renderer;
-
-
-//        $defaultAction = $this->getDefaultAction();
-        $templateName = $this->getTemplateName();
-        $className = $this->getClassName();
-
-        $this->requestParams = new Request();
+        $this->twig = App::call()->render;
+        $this->requestParams = App::call()->request;
         $this->getData = $this->requestParams->getGetParams();
         $this->postData = $this->requestParams->getPostData();
         $this->jsonPostData = $this->requestParams->getJsonPostData();
-        $this->sessionId = $this->requestParams->getSessionId();
+        $this->auth = App::call()->auth;
     }
 
     public function run()
     {
-
-        $actionName = $this->requestParams->getAction();
-
-        if (empty($actionName)) {
-            $actionName = $this->defaultAction();
-        } else {
-
-        $defaultAction = $this->getDefaultAction();
-        $templateName = $this->getTemplateName();
-        $className = $this->getClassName();
-    }
-
-    public function run($actionName)
-    {
+        $actionName = App::call()->request->getAction();
 
         if (empty($actionName)) {
-            $actionName = $this->defaultAction;
-        }
-
-
-        $method = $actionName . 'Action';
-
-        if (method_exists($this, $method)) {
-            return $this->$method();
-        }
-
-        return '404 - Страница не найдена';
-
-        }
-    }
-
-//    public function defaultAction()
-//    {
-//        $getAll = (new $this->className())->getAll();
-//        $this->render($this->templateName . 's', [$this->templateName . 's' => $getAll]);
-//    }
-
-    public function oneAction()
-    {
-
-        if(key_exists('id', $this->getData)) {
-            $getParam = (int)$this->getData['id'];
+            return $this->defaultAction();
         } else {
-            return '404 - Страница не найдена';
+
+            $method = $actionName . 'Action';
+
+            if (method_exists($this, $method)) {
+                return $this->$method();
+            }
+            return $this->twig->render('404', []);
         }
-
-        $getOne = (new $this->className())->getOne($getParam);
-        $this->render($this->templateName, [$this->templateName => $getOne]);
-
-    }
-
-    public function allAction()
-    {
-        $getAll = (new $this->className())->getAll();
-        return $this->render($this->templateName . 's', [$this->templateName . 's' => $getAll]);
-    }
-
-    public function oneAction()
-    {
-        $getOne = (new $this->className())->getOne($_GET['id']);
-        return $this->render($this->templateName, [$this->templateName => $getOne]);
-
-    }
-
-    public function addAction()
-    {
-        $addObject = new $this->className();
-
-        $postDataFill = [];
-
-        foreach ($this->postData as $key => $value) {
-            $postDataFill[$key] = $value;
-        }
-
-        $addObject->fillData($postDataFill);
-
-        $postData = $_POST;
-
-        foreach ($_POST as $key => $value) {
-            $postData[$key] = $value;
-        }
-
-        $addObject->fillData($postData);
-
-        $addObject->save();
-    }
-
-    public function updateAction()
-    {
-
-        if(key_exists('id', $this->getData)) {
-            $getParam = (int)$this->getData['id'];
-        } else {
-            return '404 - Страница не найдена';
-        }
-
-        $updateData = (new $this->className())->getOne($getParam);
-        $this->render($this->templateName . 'Update', [$this->templateName . 'Update' => $updateData]);
-    }
-
-    public function saveAction()
-    {
-        $saveObject = new $this->className();
-        $postDataFill = [];
-
-        if(key_exists('id', $this->getData)) {
-            $getParam = (int)$this->getData['id'];
-        } else {
-            return '404 - Страница не найдена';
-        }
-
-        $postDataFill['ID'] = $getParam;
-
-        foreach ($this->postData as $key => $value) {
-            $postDataFill[$key] = $value;
-        }
-
-        $saveObject->save($postDataFill);
     }
 
     public function render($templateName, $params = [])
     {
+        if (App::call()->auth->getUserName()) {
+            $params['userGroup'] = App::call()->auth->getUserGroup();
+            $params['userName'] = App::call()->auth->getUserName();
+        }
+        $params['cartSum'] = App::call()->cartRepository->getCartSum();
         echo $this->twig->render($templateName, $params);
     }
 }

@@ -4,6 +4,9 @@
 namespace App\controllers;
 
 
+use App\modules\Cart;
+use App\services\Request;
+
 class MainController extends Controller
 {
 
@@ -14,11 +17,4 @@ class MainController extends Controller
         $this->render($this->templateName, []);
     }
 
-    public function getTemplateName()
-    {
-    }
-
-    public function getClassName()
-    {
-    }
 }

@@ -1,0 +1,23 @@
+{% extends 'layouts/main.twig' %}
+
+{% block title %} Вход / Регистрация {% endblock %}
+
+{% block content %}
+    <div class="register__form-wrapper">
+        <h1 class="news__title">Регистрация</h1>
+        <form action="/auth/register/?do" class="register__form" method="post">
+            <div class="reg__div">
+                <label for="sName" class="reg__label">Ваше имя:
+
+                </label><input type="text" name="sName" class="reg__input"></div>
+            <div class="reg__div">
+                <label for="sLogin" class="reg__label">Ваш логин:
+
+                </label><input type="text" name="sLogin" class="reg__input"></div>
+            <div class="reg__div">
+                <label for="sPassword" class="reg__label">Пароль:
+                </label><input type="password" name="sPassword" class="reg__input"></div>
+            <div class="reg__div"><input type="submit" value="Регистрация" class="reg__btn btn"></div>
+        </form>
+    </div>
+{% endblock %}

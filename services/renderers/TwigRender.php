@@ -15,7 +15,8 @@ class TwigRender
         $this->templatesPath = dirname(dirname(__DIR__)) . '/views';
         $this->layoutTemplates = dirname(dirname(__DIR__)) . '/views/layouts';
         $this->loader = new \Twig\Loader\FilesystemLoader($this->templatesPath);
-        $this->twig = new \Twig\Environment($this->loader);
+        $this->twig = new \Twig\Environment($this->loader, []);
+//        $this->twig->addExtension(new \Twig\Extension\DebugExtension());
     }
 
     public function render($templateName, $params = [])

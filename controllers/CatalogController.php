@@ -2,41 +2,27 @@
 
 
 namespace App\controllers;
-
-
 use App\modules\User;
+use App\main\App;
 
 class CatalogController extends Controller
 {
-
-//    protected $defaultAction = 'all';
     protected $templateName = 'catalog';
-    protected $className = 'App\\modules\\Catalog';
 
     public function defaultAction()
     {
-        $getAll = (new $this->className())->getAll();
+        $getAll = App::call()->catalogRepository->getAll();
         $this->render($this->templateName, [$this->templateName => $getAll]);
-    }
-
-    public function getTemplateName() {
-        return $this->templateName;
     }
 
     public function viewAction()
     {
-        if(key_exists('id', $this->getData)) {
+        if (key_exists('id', $this->getData)) {
             $getParam = (int)$this->getData['id'];
+            $getOne = App::call()->catalogRepository->getOne($getParam);
+            $this->render($this->templateName . 'View', [$this->templateName => $getOne]);
         } else {
-            return '404 - Страница не найдена';
+            $this->render('404', []);
         }
-
-        $getOne = (new $this->className())->getOne($getParam);
-        $this->render($this->templateName . 'View', [$this->templateName => $getOne]);
-    }
-
-    public function getClassName()
-    {
-        return $this->className;
     }
 }

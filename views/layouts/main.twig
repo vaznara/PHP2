@@ -2,10 +2,9 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
-    <title>{% block title %} Untitled {% endblock %}</title>
+    <title>{% block title %}Корзина{% endblock %}</title>
 </head>
 <body>
 <nav class="main-menu">
@@ -14,9 +13,11 @@
             {% block nav %}
                 <li class="main-menu__item"><a href="/" class="main-menu__link">Главная</a></li>
                 <li class="main-menu__item"><a href="/catalog/" class="main-menu__link">Каталог</a></li>
-                <li class="main-menu__item"><a href="/user/" class="main-menu__link">Пользователи</a></li>
-                <li class="main-menu__item"><a href="/cart/" class="main-menu__link">Корзина
-                        <!--(<span class="red" id="cart-count"></span>)--></a></li>
+                {% if userGroup == 'adminGroup' %}<li class="main-menu__item"><a href="/user/" class="main-menu__link">Пользователи</a></li>{% endif %}
+                <li class="main-menu__item"><a href="/cart/" class="main-menu__link">Корзина (<span class="red" id="main-count">{{ cartSum.countSum }}</span>)</a></li>
+                {% if userGroup %}<li class="main-menu__item"><a href="/order/" class="main-menu__link">{% if userGroup == 'adminGroup' %}Заказы{% else %}Мой заказы{% endif %}</a></li>{% endif %}
+                {% if not userGroup %}<li class="main-menu__item"><a href="/auth/" class="main-menu__link">Вход / Регистрация</a></li>{% endif %}
+                {% if userGroup %}<li class="main-menu__item">{{ userName }} <a href="/auth/logout" class="main-menu__link red" style="font-size: 12px;">(Выход)</a></li>{% endif %}
             {% endblock %}
         </ul>
     </div>
@@ -25,6 +26,10 @@
     {% block content %}
     {% endblock %}
 </div>
+<footer class="footer">
+    {% block footer %}
+    {% endblock %}
+</footer>
 </body>
 <script src="/js/main.js"></script>
 </html>
