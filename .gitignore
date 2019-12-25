@@ -1,1 +1,10 @@
 /vendor/
+/.idea/.gitignore
+/.idea/dataSources.xml
+/.idea/geekbrains2.iml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/php-test-framework.xml
+/.idea/php.xml
+/.idea/sqldialects.xml
+/.idea/vcs.xml
